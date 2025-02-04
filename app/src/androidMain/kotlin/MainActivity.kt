@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import io.github.vinceglb.filekit.core.FileKit
 import org.cufy.mmrpc.editor.common.preferences.flowUiColorsInOrDefault
 import org.cufy.mmrpc.editor.common.preferences.flowUiScaleInOrDefault
 import org.cufy.mmrpc.editor.components.window.main.MainWindow
@@ -15,6 +16,7 @@ import org.cufy.mmrpc.editor.components.wrapper.ClientTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FileKit.init(this)
 
         setContent {
             val coroutineScope = rememberCoroutineScope()

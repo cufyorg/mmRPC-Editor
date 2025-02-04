@@ -2,7 +2,6 @@ package org.cufy.mmrpc.editor.common
 
 import com.charleskorn.kaml.Yaml
 import io.github.vinceglb.filekit.core.FileKit
-import io.github.vinceglb.filekit.core.PickerType
 import io.github.vinceglb.filekit.core.extension
 import io.github.vinceglb.filekit.core.pickFile
 import kotlinx.serialization.decodeFromString
@@ -15,7 +14,6 @@ import java.io.IOException
 
 suspend fun openMmrpcSpec(clientLocal: ClientLocal) {
     val file = FileKit.pickFile(
-        type = PickerType.File(listOf("json", "yml", "yaml")),
         title = "Select mmrpc schema",
     )
 
