@@ -5,17 +5,14 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import net.lsafer.sundry.compose.simplenav.InMemorySimpleNavController
 import net.lsafer.sundry.storage.createFileJsonObjectDataStore
-import org.cufy.mmrpc.editor.scripts.createIOCoroutineScope
-import org.cufy.mmrpc.editor.scripts.createSpecState
-import org.cufy.mmrpc.editor.scripts.init_kermit_writers
-import org.cufy.mmrpc.editor.scripts.register_shutdown_hook
-import java.io.File
+import okio.Path.Companion.toPath
+import org.cufy.mmrpc.editor.scripts.*
 import kotlin.random.Random
 
 suspend fun createDesktopClientLocal(): ClientLocal {
     val clientLocal = ClientLocal()
-    clientLocal.dataDir = File("./data").absoluteFile.toPath()
-    clientLocal.cacheDir = File("./cache").absoluteFile.toPath()
+    clientLocal.dataDir = getStdDataDir().toPath()
+    clientLocal.cacheDir = getStdCacheDir().toPath()
 
     clientLocal.clock = Clock.System
     clientLocal.timeZone = TimeZone.currentSystemDefault()

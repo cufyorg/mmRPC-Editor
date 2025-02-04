@@ -44,6 +44,8 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-swing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 
+okio = { module = "com.squareup.okio:okio", version = "3.10.2" }
+
 ##### Internal Dependencies #####
 
 mmrpc-runtime = { module = "org.cufy.mmrpc:mmrpc-runtime", version.ref = "mmrpc" }
@@ -65,6 +67,7 @@ mikepenz-markdownCompose-m3 = { module = "com.mikepenz:multiplatform-markdown-re
 
 touchlab-kermit = { module = "co.touchlab:kermit", version = "2.0.3" }
 charleskorn-kaml = { module = "com.charleskorn.kaml:kaml", version = "0.61.0" }
+harawata-appdirs = { module = "net.harawata:appdirs", version = "1.3.0" }
 
 ##### ANDROID Dependencies #####
 

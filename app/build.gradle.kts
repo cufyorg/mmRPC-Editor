@@ -46,6 +46,8 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.datetime)
 
+            implementation(libs.okio)
+
             // ##### Builtin Dependencies #####
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -92,6 +94,8 @@ kotlin {
         desktopMain.dependencies {
             implementation(libs.kotlinx.coroutines.swing)
             implementation(compose.desktop.currentOs)
+
+            implementation(libs.harawata.appdirs)
         }
 
         androidMain.dependencies {

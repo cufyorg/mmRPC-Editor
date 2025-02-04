@@ -8,12 +8,11 @@ import kotlinx.datetime.TimeZone
 import kotlinx.serialization.json.JsonObject
 import net.lsafer.sundry.compose.simplenav.SimpleNavController
 import net.lsafer.sundry.storage.SimpleDataStore
-import java.nio.file.Path
 import kotlin.random.Random
 
 class ClientLocal {
-    lateinit var dataDir: Path
-    lateinit var cacheDir: Path
+    lateinit var dataDir: okio.Path
+    lateinit var cacheDir: okio.Path
 
     // etc
 

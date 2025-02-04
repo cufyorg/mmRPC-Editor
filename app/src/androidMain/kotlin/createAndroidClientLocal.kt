@@ -7,6 +7,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.serialization.serializer
 import net.lsafer.sundry.compose.simplenav.InMemorySimpleNavController
 import net.lsafer.sundry.storage.createFileJsonObjectDataStore
+import okio.Path.Companion.toOkioPath
 import org.cufy.mmrpc.editor.scripts.createIOCoroutineScope
 import org.cufy.mmrpc.editor.scripts.createSpecState
 import org.cufy.mmrpc.editor.scripts.init_kermit_writers
@@ -17,8 +18,8 @@ suspend fun createAndroidClientLocal(
     application: Application,
 ): ClientLocal {
     val clientLocal = ClientLocal()
-    clientLocal.dataDir = application.filesDir.toPath()
-    clientLocal.cacheDir = application.cacheDir.toPath()
+    clientLocal.dataDir = application.filesDir.toOkioPath()
+    clientLocal.cacheDir = application.cacheDir.toOkioPath()
 
     clientLocal.clock = Clock.System
     clientLocal.timeZone = TimeZone.currentSystemDefault()
