@@ -29,10 +29,7 @@ fun ClientLocal.flowUiColorsInOrDefault(coroutineScope: CoroutineScope): StateFl
         )
 }
 
-fun ClientLocal.flowDataSpec(coroutineScope: CoroutineScope): Flow<MmrpcSpec> {
+fun ClientLocal.flowDataSpec(): Flow<MmrpcSpec> {
     return dataStore.data
         .mapNotNull { it[PK_DATA_SPEC]?.deserializeOrNull<MmrpcSpec>(LenientJson) }
 }
-
-val ClientLocal.uiScale get() = dataStore.data.value[PK_UI_SCALE]?.asIntOrNull ?: UI_SCALE_DEFAULT
-val ClientLocal.uiColors get() = dataStore.data.value[PK_UI_COLORS]?.asStringOrNull ?: UI_COLORS_DEFAULT

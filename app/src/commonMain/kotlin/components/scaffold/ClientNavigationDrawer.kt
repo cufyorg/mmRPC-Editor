@@ -19,8 +19,7 @@ import org.cufy.mmrpc.editor.ClientLocal
 import org.cufy.mmrpc.editor.NamespacePage
 import org.cufy.mmrpc.editor.OVERSCROLL_HEIGHT
 import org.cufy.mmrpc.editor.ProtocolPage
-import org.cufy.mmrpc.editor.components.lib.NavigationCompactItem
-import org.cufy.mmrpc.editor.components.lib.NavigationSection
+import org.cufy.mmrpc.editor.components.lib.CompactNavigationDrawerItem
 
 @Composable
 fun ClientNavigationDrawer(
@@ -48,7 +47,12 @@ fun ClientNavigationDrawer(
         Spacer(Modifier.height(40.dp))
 
         for (nsSection in spec.sections) {
-            NavigationSection(nsSection.value)
+            Text(
+                text = nsSection.value,
+                color = MaterialTheme.colorScheme.secondary,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(start = 30.dp)
+            )
 
             // sorting this way is necessary to push down longer
             // sub-namespaces (usually the namespaces of protocols)
@@ -56,12 +60,15 @@ fun ClientNavigationDrawer(
                 .filter { it == nsSection || it != null && it in nsSection }
                 .toSortedSet(compareBy({ it?.segmentsCount() }, { it }))
 
+            Spacer(Modifier.height(5.dp))
+
             for (nsSubSection in nsSubSections) {
-                NavigationCompactItem(
-                    title = nsSubSection?.value.orEmpty()
-                        .removePrefix(nsSection.value)
-                        .ifBlank { "[toplevel]" },
-                    active = when (val currentScreen = clientLocal.navController.current) {
+                CompactNavigationDrawerItem(
+                    label =
+                        nsSubSection?.value.orEmpty()
+                            .removePrefix(nsSection.value)
+                            .ifBlank { "[toplevel]" },
+                    selected = when (val currentScreen = clientLocal.navController.current) {
                         is NamespacePage -> currentScreen.namespace == nsSubSection
                         is ProtocolPage -> currentScreen.namespace == nsSubSection
 
@@ -72,6 +79,8 @@ fun ClientNavigationDrawer(
                     },
                 )
             }
+
+            Spacer(Modifier.height(15.dp))
         }
 
         Spacer(Modifier.height(OVERSCROLL_HEIGHT))

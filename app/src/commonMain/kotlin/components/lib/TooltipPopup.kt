@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.material3.TooltipDefaults.rememberPlainTooltipPositionProvider
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.input.pointer.pointerInput
@@ -21,10 +20,6 @@ import kotlin.math.roundToInt
 @Composable
 fun PopupTooltipBox(
     modifier: Modifier = Modifier,
-
-    anchor: Alignment = Alignment.BottomCenter,
-    alignment: Alignment = Alignment.BottomCenter,
-    offset: DpOffset = DpOffset.Zero,
 
     tooltip: @Composable () -> Unit,
     content: @Composable () -> Unit,

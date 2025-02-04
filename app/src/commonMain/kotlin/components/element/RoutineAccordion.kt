@@ -23,7 +23,7 @@ import org.cufy.mmrpc.editor.*
 import org.cufy.mmrpc.editor.components.element.attributes.ElementAttributes
 import org.cufy.mmrpc.editor.components.element.content.ElementContent
 import org.cufy.mmrpc.editor.components.element.description.ElementDescription
-import org.cufy.mmrpc.editor.components.lib.Accordion
+import org.cufy.mmrpc.editor.components.lib.CustomAccordion
 import org.cufy.mmrpc.editor.components.lib.DashedHorizontalDivider
 import org.cufy.mmrpc.editor.components.lib.PopupTooltipBox
 import org.cufy.mmrpc.editor.util.COMM_CHANNEL
@@ -44,7 +44,7 @@ fun RoutineAccordion(
     val commSecurity = routine.comm intersect COMM_SECURITY
     val commOther = routine.comm - COMM_STANDARD
 
-    Accordion(
+    CustomAccordion(
         modifier = modifier,
         expanded = expanded,
         summary = {

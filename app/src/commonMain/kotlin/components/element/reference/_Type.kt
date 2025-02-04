@@ -1,6 +1,5 @@
 package org.cufy.mmrpc.editor.components.element.reference
 
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,57 +30,57 @@ fun TypeElementReference(
         },
         content = {
             // TODO check if is inlined
-            if (/* element.isAnonymous */ false) {
-                Row {
-                    if (prefix.isNotBlank()) {
-                        Text(
-                            text = "$prefix ",
-                            style = ELEMENT_STYLE_MEDIUM,
-                            color = ELEMENT_COLOR_DEF,
-                            fontFamily = FontFamily.Monospace,
-                        )
-                    }
+//            if (element.isAnonymous) {
+//                Row {
+//                    if (prefix.isNotBlank()) {
+//                        Text(
+//                            text = "$prefix ",
+//                            style = ELEMENT_STYLE_MEDIUM,
+//                            color = ELEMENT_COLOR_DEF,
+//                            fontFamily = FontFamily.Monospace,
+//                        )
+//                    }
+//
+//                    for ((i, it) in types.withIndex()) {
+//                        if (i != 0 && !isSeparatorBiased) {
+//                            Text(
+//                                text = " $separator ",
+//                                style = ELEMENT_STYLE_MEDIUM,
+//                                color = ELEMENT_COLOR_DEF,
+//                                fontFamily = FontFamily.Monospace,
+//                            )
+//                        }
+//
+//                        if (i != 0 && isSeparatorBiased) {
+//                            Text(
+//                                text = "$separator ",
+//                                style = ELEMENT_STYLE_MEDIUM,
+//                                color = ELEMENT_COLOR_DEF,
+//                                fontFamily = FontFamily.Monospace,
+//                            )
+//                        }
+//
+//                        ElementReference(it, onElementClick)
+//                    }
+//
+//                    if (suffix.isNotBlank()) {
+//                        Text(
+//                            text = " $suffix",
+//                            style = ELEMENT_STYLE_MEDIUM,
+//                            color = ELEMENT_COLOR_DEF,
+//                            fontFamily = FontFamily.Monospace,
+//                        )
+//                    }
+//                }
+//            }
 
-                    for ((i, it) in types.withIndex()) {
-                        if (i != 0 && !isSeparatorBiased) {
-                            Text(
-                                text = " $separator ",
-                                style = ELEMENT_STYLE_MEDIUM,
-                                color = ELEMENT_COLOR_DEF,
-                                fontFamily = FontFamily.Monospace,
-                            )
-                        }
-
-                        if (i != 0 && isSeparatorBiased) {
-                            Text(
-                                text = "$separator ",
-                                style = ELEMENT_STYLE_MEDIUM,
-                                color = ELEMENT_COLOR_DEF,
-                                fontFamily = FontFamily.Monospace,
-                            )
-                        }
-
-                        ElementReference(it, onElementClick)
-                    }
-
-                    if (suffix.isNotBlank()) {
-                        Text(
-                            text = " $suffix",
-                            style = ELEMENT_STYLE_MEDIUM,
-                            color = ELEMENT_COLOR_DEF,
-                            fontFamily = FontFamily.Monospace,
-                        )
-                    }
-                }
-            } else {
-                SelectionContainer {
-                    Text(
-                        text = element.canonicalName.value,
-                        style = ELEMENT_STYLE_MEDIUM,
-                        color = ELEMENT_COLOR_DEF,
-                        fontFamily = FontFamily.Monospace,
-                    )
-                }
+            SelectionContainer {
+                Text(
+                    text = element.canonicalName.value,
+                    style = ELEMENT_STYLE_MEDIUM,
+                    color = ELEMENT_COLOR_DEF,
+                    fontFamily = FontFamily.Monospace,
+                )
             }
         }
     )

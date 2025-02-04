@@ -1,6 +1,5 @@
 package org.cufy.mmrpc.editor.components.element.reference
 
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,30 +25,31 @@ fun EnumElementReference(
         },
         content = {
             // TODO check if is inlined
-            if (/* element.isAnonymous */ false) {
-                Row {
-                    for ((i, it) in element.entries.withIndex()) {
-                        if (i != 0) {
-                            Text(
-                                text = " | ",
-                                style = ELEMENT_STYLE_MEDIUM,
-                                color = ELEMENT_COLOR_DEF,
-                                fontFamily = FontFamily.Monospace,
-                            )
-                        }
+//            if (element.isAnonymous) {
+//                Row {
+//                    for ((i, it) in element.entries.withIndex()) {
+//                        if (i != 0) {
+//                            Text(
+//                                text = " | ",
+//                                style = ELEMENT_STYLE_MEDIUM,
+//                                color = ELEMENT_COLOR_DEF,
+//                                fontFamily = FontFamily.Monospace,
+//                            )
+//                        }
+//
+//                        ElementReference(it, onElementClick)
+//                    }
+//                }
+//                return@PopupTooltipBox
+//            }
 
-                        ElementReference(it, onElementClick)
-                    }
-                }
-            } else {
-                SelectionContainer {
-                    Text(
-                        text = element.canonicalName.value,
-                        style = ELEMENT_STYLE_MEDIUM,
-                        color = ELEMENT_COLOR_DEF,
-                        fontFamily = FontFamily.Monospace,
-                    )
-                }
+            SelectionContainer {
+                Text(
+                    text = element.canonicalName.value,
+                    style = ELEMENT_STYLE_MEDIUM,
+                    color = ELEMENT_COLOR_DEF,
+                    fontFamily = FontFamily.Monospace,
+                )
             }
         }
     )

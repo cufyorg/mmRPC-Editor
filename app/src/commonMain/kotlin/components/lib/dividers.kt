@@ -19,7 +19,7 @@ fun DashedVerticalDivider(
     thickness: Dp = DividerDefaults.Thickness,
     color: Color = DividerDefaults.color,
 ) {
-    Canvas(Modifier.fillMaxHeight().width(thickness)) {
+    Canvas(Modifier.fillMaxHeight().width(thickness).then(modifier)) {
         drawLine(
             color = color,
             strokeWidth = thickness.toPx(),
@@ -36,7 +36,7 @@ fun DashedHorizontalDivider(
     thickness: Dp = DividerDefaults.Thickness,
     color: Color = DividerDefaults.color,
 ) {
-    Canvas(Modifier.fillMaxWidth().height(thickness)) {
+    Canvas(Modifier.fillMaxWidth().height(thickness).then(modifier)) {
         drawLine(
             color = color,
             strokeWidth = thickness.toPx(),
