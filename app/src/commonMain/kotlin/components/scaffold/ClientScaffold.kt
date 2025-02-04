@@ -58,12 +58,23 @@ fun ClientScaffold(
                         content = {
                             content()
 
-                            Text(
-                                modifier = Modifier.align(Alignment.BottomEnd),
-                                fontSize = 15.sp,
-                                color = MaterialTheme.colorScheme.tertiary,
-                                text = "Loaded: ${spec.name} (${spec.version})",
-                            )
+                            Column(Modifier.align(Alignment.BottomEnd)) {
+                                Text(
+                                    fontSize = 15.sp,
+                                    color = MaterialTheme.colorScheme.tertiary,
+                                    text = "loaded: ${spec.name} (${spec.version})",
+                                )
+                                Text(
+                                    fontSize = 15.sp,
+                                    color = MaterialTheme.colorScheme.tertiary,
+                                    text = "dataDir: ${clientLocal.dataDir.toFile().absolutePath}"
+                                )
+                                Text(
+                                    fontSize = 15.sp,
+                                    color = MaterialTheme.colorScheme.tertiary,
+                                    text = "cacheDir: ${clientLocal.cacheDir.toFile().absolutePath}"
+                                )
+                            }
                         },
                     )
                 },
