@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "org.cufy.mmrpc.editor"
-version = "1.0-pre.0"
+version = "1.0-pre.1"
 project.extraProperties.set("version_alt", "1.0.0")
 
 tasks.wrapper {
