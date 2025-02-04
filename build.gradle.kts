@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.plugin.extraProperties
+
 plugins {
     // this is necessary to avoid the plugins to be loaded multiple times
     // in each subproject's classloader
@@ -10,6 +12,7 @@ plugins {
 
 group = "org.cufy.mmrpc.editor"
 version = "1.0-pre.0"
+project.extraProperties.set("version_alt", "1.0.0")
 
 tasks.wrapper {
     gradleVersion = "8.9"

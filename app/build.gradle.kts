@@ -1,6 +1,6 @@
-
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.extraProperties
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -123,8 +123,11 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "org.cufy.mmrpc.editor"
-            packageVersion = "1.0.0"
+            packageName = "mmRPC Editor"
+            packageVersion = rootProject.extraProperties["version_alt"].toString()
+            vendor = "mmRPC"
+
+            modules("jdk.security.auth")
         }
     }
 }
