@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FileOpen
 import androidx.compose.material.icons.filled.Palette
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -12,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import org.cufy.mmrpc.editor.ClientLocal
 import org.cufy.mmrpc.editor.common.openMmrpcSpec
+import org.cufy.mmrpc.editor.components.scaffold.dropdown.ExportDropdownMenu
 import org.cufy.mmrpc.editor.components.scaffold.dropdown.ThemeDropdownMenu
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,6 +25,7 @@ fun ClientWideTopBar(
 ) {
     val coroutineScope = rememberCoroutineScope()
     var isThemeMenuOpen by remember { mutableStateOf(false) }
+    var isExportMenuOpen by remember { mutableStateOf(false) }
 
     fun onOpenSchemaClick() = coroutineScope.launch { openMmrpcSpec(clientLocal) }
 
@@ -37,6 +40,15 @@ fun ClientWideTopBar(
                 ThemeDropdownMenu(
                     expanded = isThemeMenuOpen,
                     onDismissRequest = { isThemeMenuOpen = false },
+                    clientLocal = clientLocal,
+                )
+            }
+            IconButton({ isExportMenuOpen = true }) {
+                Icon(Icons.Default.Save, "Export")
+
+                ExportDropdownMenu(
+                    expanded = isExportMenuOpen,
+                    onDismissRequest = { isExportMenuOpen = false },
                     clientLocal = clientLocal,
                 )
             }
