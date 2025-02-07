@@ -17,7 +17,6 @@ import io.github.vinceglb.filekit.core.FileKit
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import org.cufy.mmrpc.MmrpcSpec
-import org.cufy.mmrpc.SpecSheet.Companion.toSpecSheet
 import org.cufy.mmrpc.compact.strip
 import org.cufy.mmrpc.compact.toCompact
 import org.cufy.mmrpc.editor.COMMON_PADDING
@@ -44,12 +43,14 @@ fun ExportDropdownMenu(
             name = spec.name,
             version = spec.version,
             sections = sections,
-            elements = spec.elements
+            elements = spec.elements.asSequence()
                 .filter { sections.any { ns -> it.canonicalName in ns } }
-                .toSpecSheet()
-                .toCompact()
-                .let { if (strip) it.strip() else it }
-                .elements,
+                .flatMap { it.collect() }
+                .filterNot { it.isBuiltin() }
+                .distinctBy { it.canonicalName }
+                .map { it.toCompact() }
+                .let { if (strip) it.map { it.strip() } else it }
+                .toList()
         )
 
         val format = Yaml(

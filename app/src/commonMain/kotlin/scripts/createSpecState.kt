@@ -21,7 +21,6 @@ fun createSpecState(clientLocal: ClientLocal): StateFlow<ClientMmrpcSpec> {
                     .inflate(builtin.elements)
                     .flatMap { it.collect() }
                     .distinctBy { it.canonicalName }
-                    .sortedBy { it.canonicalName }
                     .toList()
             )
         }
