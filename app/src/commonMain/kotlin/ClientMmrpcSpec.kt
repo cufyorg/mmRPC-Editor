@@ -5,11 +5,11 @@ import org.cufy.mmrpc.CanonicalName
 import org.cufy.mmrpc.ElementDefinition
 
 @Serializable
-class ClientSpec(
+class ClientMmrpcSpec(
     val name: String = "[null]",
     val version: String = "[null]",
     val sections: List<CanonicalName> = emptyList(),
-    val elements: Set<ElementDefinition> = emptySet(),
+    val elements: List<ElementDefinition> = emptyList(),
 ) {
     val isEmpty by lazy {
         name == "[null]" && version == "[null]" &&

@@ -23,6 +23,6 @@ class ClientLocal {
 
     lateinit var dataStore: SimpleDataStore<JsonObject>
     lateinit var navController: SimpleNavController<ClientRoute>
-    lateinit var specState: StateFlow<ClientSpec>
+    lateinit var specState: StateFlow<ClientMmrpcSpec>
     lateinit var snackbar: SnackbarHostState
 }
