@@ -11,10 +11,12 @@ fun ElementReference(
     modifier: Modifier = Modifier,
 ) {
     when (element) {
+        is ArrayDefinition -> ArrayElementReference(element, onElementClick, modifier)
         is ConstDefinition -> ConstElementReference(element, onElementClick, modifier)
         is EnumDefinition -> EnumElementReference(element, onElementClick, modifier)
         is FieldDefinition -> FieldElementReference(element, onElementClick, modifier)
         is OptionalDefinition -> OptionalElementReference(element, onElementClick, modifier)
+        is TupleDefinition -> TupleElementReference(element, onElementClick, modifier)
 
         is FaultDefinition -> DefaultElementReference(element, onElementClick, modifier)
         is MetadataDefinition -> DefaultElementReference(element, onElementClick, modifier)
@@ -24,49 +26,19 @@ fun ElementReference(
         is StructDefinition -> DefaultElementReference(element, onElementClick, modifier)
 
         is UnionDefinition ->
-            TypeElementReference(
+            UnionOrInterElementReference(
                 element = element,
                 types = element.types,
-                prefix = "",
-                suffix = "",
                 separator = "|",
-                isSeparatorBiased = false,
                 onElementClick = onElementClick,
                 modifier = modifier,
             )
 
         is InterDefinition ->
-            TypeElementReference(
+            UnionOrInterElementReference(
                 element = element,
                 types = element.types,
-                prefix = "",
-                suffix = "",
                 separator = "&",
-                isSeparatorBiased = false,
-                onElementClick = onElementClick,
-                modifier = modifier,
-            )
-
-        is TupleDefinition ->
-            TypeElementReference(
-                element = element,
-                types = element.types,
-                prefix = "(",
-                suffix = ")",
-                separator = ",",
-                isSeparatorBiased = true,
-                onElementClick = onElementClick,
-                modifier = modifier,
-            )
-
-        is ArrayDefinition ->
-            TypeElementReference(
-                element = element,
-                types = listOf(element.type),
-                prefix = "[",
-                suffix = "]",
-                separator = ",",
-                isSeparatorBiased = true,
                 onElementClick = onElementClick,
                 modifier = modifier,
             )

@@ -10,19 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import org.cufy.mmrpc.ElementDefinition
-import org.cufy.mmrpc.TypeDefinition
+import org.cufy.mmrpc.TupleDefinition
 import org.cufy.mmrpc.editor.COMMON_PADDING
 import org.cufy.mmrpc.editor.ELEMENT_COLOR_DEF
 import org.cufy.mmrpc.editor.ELEMENT_STYLE_MEDIUM
 import org.cufy.mmrpc.editor.components.element.reference.ElementReference
 
 @Composable
-fun TupleOrArrayElementSignature(
-    element: TypeDefinition,
-    types: List<TypeDefinition>,
-    prefix: String,
-    suffix: String,
-    separator: String,
+fun TupleElementSignature(
+    element: TupleDefinition,
     onElementClick: (ElementDefinition) -> Unit,
     modifier: Modifier,
 ) {
@@ -49,10 +45,10 @@ fun TupleOrArrayElementSignature(
 
             Text(
                 text = buildString {
-                    append(" = $prefix")
+                    append(" = (")
 
-                    if (types.isEmpty())
-                        append(suffix)
+                    if (element.types.isEmpty())
+                        append(")")
                 },
                 style = ELEMENT_STYLE_MEDIUM,
                 color = ELEMENT_COLOR_DEF,
@@ -60,12 +56,12 @@ fun TupleOrArrayElementSignature(
             )
         }
 
-        for (type in types) {
+        for (type in element.types) {
             Row(Modifier.padding(start = COMMON_PADDING)) {
                 ElementReference(type, onElementClick)
 
                 Text(
-                    text = separator,
+                    text = ",",
                     style = ELEMENT_STYLE_MEDIUM,
                     color = ELEMENT_COLOR_DEF,
                     fontFamily = FontFamily.Monospace,
@@ -73,9 +69,9 @@ fun TupleOrArrayElementSignature(
             }
         }
 
-        if (types.isNotEmpty()) {
+        if (element.types.isNotEmpty()) {
             Text(
-                text = suffix,
+                text = ")",
                 style = ELEMENT_STYLE_MEDIUM,
                 color = ELEMENT_COLOR_DEF,
                 fontFamily = FontFamily.Monospace,

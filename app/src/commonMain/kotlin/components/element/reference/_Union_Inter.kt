@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import org.cufy.mmrpc.ElementDefinition
-import org.cufy.mmrpc.EnumDefinition
+import org.cufy.mmrpc.TypeDefinition
 import org.cufy.mmrpc.editor.ELEMENT_COLOR_DEF
 import org.cufy.mmrpc.editor.ELEMENT_STYLE_MEDIUM
 import org.cufy.mmrpc.editor.components.element.content.ElementContent
@@ -15,10 +15,12 @@ import org.cufy.mmrpc.editor.components.lib.PopupTooltipBox
 import org.cufy.mmrpc.editor.util.isInlined
 
 @Composable
-fun EnumElementReference(
-    element: EnumDefinition,
-    onElementClick: (ElementDefinition) -> Unit = {},
-    modifier: Modifier = Modifier,
+fun UnionOrInterElementReference(
+    element: TypeDefinition,
+    types: List<TypeDefinition>,
+    separator: String,
+    onElementClick: (ElementDefinition) -> Unit,
+    modifier: Modifier,
 ) {
     PopupTooltipBox(
         modifier = modifier,
@@ -36,10 +38,10 @@ fun EnumElementReference(
                     )
                 }
             else Row {
-                for ((i, it) in element.entries.withIndex()) {
+                for ((i, it) in types.withIndex()) {
                     if (i != 0) {
                         Text(
-                            text = " | ",
+                            text = " $separator ",
                             style = ELEMENT_STYLE_MEDIUM,
                             color = ELEMENT_COLOR_DEF,
                             fontFamily = FontFamily.Monospace,
