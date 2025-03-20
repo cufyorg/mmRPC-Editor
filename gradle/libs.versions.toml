@@ -6,7 +6,7 @@ kotlinx-datetime = "0.6.1"
 
 compose = "1.7.0"
 
-mmrpc = "0.3.0-beta.6"
+mmrpc = "0.3.0-beta.8"
 extkt = "0.1.3"
 
 lsafer-sundry = "db15c42227"
