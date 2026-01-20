@@ -7,18 +7,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
 import org.cufy.mmrpc.ElementDefinition
-import org.cufy.mmrpc.TypeDefinition
+import org.cufy.mmrpc.UnionDefinition
 import org.cufy.mmrpc.editor.ELEMENT_COLOR_DEF
 import org.cufy.mmrpc.editor.ELEMENT_STYLE_MEDIUM
 import org.cufy.mmrpc.editor.components.element.content.ElementContent
 import org.cufy.mmrpc.editor.components.lib.PopupTooltipBox
-import org.cufy.mmrpc.editor.util.isInlined
 
 @Composable
-fun UnionOrInterElementReference(
-    element: TypeDefinition,
-    types: List<TypeDefinition>,
-    separator: String,
+fun UnionElementReference(
+    element: UnionDefinition,
     onElementClick: (ElementDefinition) -> Unit,
     modifier: Modifier,
 ) {
@@ -28,7 +25,7 @@ fun UnionOrInterElementReference(
             ElementContent(element, onElementClick)
         },
         content = {
-            if (!isInlined(element))
+            if (!element.canonicalName.isAnonymous)
                 SelectionContainer {
                     Text(
                         text = element.canonicalName.value,
@@ -38,10 +35,10 @@ fun UnionOrInterElementReference(
                     )
                 }
             else Row {
-                for ((i, it) in types.withIndex()) {
+                for ((i, it) in element.types.withIndex()) {
                     if (i != 0) {
                         Text(
-                            text = " $separator ",
+                            text = " | ",
                             style = ELEMENT_STYLE_MEDIUM,
                             color = ELEMENT_COLOR_DEF,
                             fontFamily = FontFamily.Monospace,

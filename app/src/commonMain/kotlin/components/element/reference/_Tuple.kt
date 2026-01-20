@@ -12,7 +12,6 @@ import org.cufy.mmrpc.editor.ELEMENT_COLOR_DEF
 import org.cufy.mmrpc.editor.ELEMENT_STYLE_MEDIUM
 import org.cufy.mmrpc.editor.components.element.content.ElementContent
 import org.cufy.mmrpc.editor.components.lib.PopupTooltipBox
-import org.cufy.mmrpc.editor.util.isInlined
 
 @Composable
 fun TupleElementReference(
@@ -26,7 +25,7 @@ fun TupleElementReference(
             ElementContent(element, onElementClick)
         },
         content = {
-            if (!isInlined(element))
+            if (!element.canonicalName.isAnonymous)
                 SelectionContainer {
                     Text(
                         text = element.canonicalName.value,

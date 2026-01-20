@@ -2,13 +2,13 @@ package org.cufy.mmrpc.editor.scripts
 
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.runBlocking
-import org.cufy.mmrpc.editor.ClientLocal
+import org.cufy.mmrpc.editor.Local
 
-@Suppress("FunctionName")
-fun ClientLocal.register_shutdown_hook() {
+context(local: Local)
+fun registerJvmShutdownHook() {
     Runtime.getRuntime().addShutdownHook(Thread {
         runBlocking {
-            ioScope.cancel()
+            local.ioScope.cancel()
         }
     })
 }

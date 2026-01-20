@@ -12,25 +12,28 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import com.charleskorn.kaml.Yaml
-import io.github.vinceglb.filekit.core.FileKit
+import io.github.vinceglb.filekit.FileKit
+import io.github.vinceglb.filekit.dialogs.openFileSaver
+import io.github.vinceglb.filekit.writeString
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
 import org.cufy.mmrpc.MmrpcSpec
+import org.cufy.mmrpc.builtin
+import org.cufy.mmrpc.collect
 import org.cufy.mmrpc.compact.strip
 import org.cufy.mmrpc.compact.toCompact
 import org.cufy.mmrpc.editor.COMMON_PADDING
-import org.cufy.mmrpc.editor.ClientLocal
+import org.cufy.mmrpc.editor.Local
+import org.cufy.mmrpc.experimental.toYamlString
 
 @Composable
+context(local: Local)
 fun ExportDropdownMenu(
     expanded: Boolean,
     onDismissRequest: () -> Unit,
-    clientLocal: ClientLocal,
     modifier: Modifier = Modifier,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val spec by clientLocal.specState.collectAsState()
+    val spec = local.repo.displaySpec
 
     var stripInput by remember { mutableStateOf(false) }
     var sectionsInput by remember { mutableStateOf(spec.sections.toSet()) }
@@ -46,27 +49,19 @@ fun ExportDropdownMenu(
             elements = spec.elements.asSequence()
                 .filter { sections.any { ns -> it.canonicalName in ns } }
                 .flatMap { it.collect() }
-                .filterNot { it.isBuiltin() }
+                .filterNot { it.canonicalName in builtin }
                 .distinctBy { it.canonicalName }
                 .map { it.toCompact() }
                 .let { if (strip) it.map { it.strip() } else it }
                 .toList()
         )
 
-        val format = Yaml(
-            configuration = com.charleskorn.kaml.YamlConfiguration(
-                encodeDefaults = false,
-                strictMode = false,
-            )
-        )
-
-        FileKit.saveFile(
-            bytes = format
-                .encodeToString(mmrpcSpec)
-                .encodeToByteArray(),
-            baseName = mmrpcSpec.name,
+        val file = FileKit.openFileSaver(
+            suggestedName = mmrpcSpec.name,
             extension = "mmrpc.yaml",
         )
+
+        file?.writeString(mmrpcSpec.toYamlString())
     }
 
     DropdownMenu(

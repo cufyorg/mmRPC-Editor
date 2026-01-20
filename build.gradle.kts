@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.jetbrains.compose) apply false
     alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.android.library) apply false
 }
 
 group = "org.cufy.mmrpc.editor"
@@ -15,7 +14,7 @@ version = "1.0-pre.5"
 project.extraProperties.set("version_alt", "1.0.0")
 
 tasks.wrapper {
-    gradleVersion = "8.9"
+    gradleVersion = "8.14.3"
 }
 
 subprojects {

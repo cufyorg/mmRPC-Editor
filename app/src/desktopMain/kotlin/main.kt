@@ -1,32 +1,26 @@
 package org.cufy.mmrpc.editor
 
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.window.application
-import org.cufy.mmrpc.editor.common.preferences.flowUiColorsInOrDefault
-import org.cufy.mmrpc.editor.common.preferences.flowUiScaleInOrDefault
+import io.github.vinceglb.filekit.FileKit
+import net.lsafer.compose.simplenav.InMemoryNavController
 import org.cufy.mmrpc.editor.components.window.main.MainWindow
-import org.cufy.mmrpc.editor.components.wrapper.ClientTheme
-import org.cufy.mmrpc.editor.components.wrapper.DesktopClientWindowCompat
+import org.cufy.mmrpc.editor.components.wrapper.DesktopUniWindowCompat
+import org.cufy.mmrpc.editor.components.wrapper.UniTheme
 
-suspend fun main() {
-    val clientLocal = createDesktopClientLocal()
+fun main() {
+    FileKit.init("org.cufy.mmrpc.editor")
+
+    val local = createDesktopLocal()
+    val navCtrl = InMemoryNavController<MainRoute>(
+        default = MainRoute.Home,
+    )
 
     application {
-        val coroutineScope = rememberCoroutineScope()
-        val application = this@application
-
-        val uiColors by clientLocal
-            .flowUiColorsInOrDefault(coroutineScope)
-            .collectAsState()
-        val uiScale by clientLocal
-            .flowUiScaleInOrDefault(coroutineScope)
-            .collectAsState()
-
-        DesktopClientWindowCompat(application, clientLocal) {
-            ClientTheme(uiScale, uiColors) {
-                MainWindow(clientLocal)
+        context(local, navCtrl) {
+            DesktopUniWindowCompat {
+                UniTheme {
+                    MainWindow()
+                }
             }
         }
     }

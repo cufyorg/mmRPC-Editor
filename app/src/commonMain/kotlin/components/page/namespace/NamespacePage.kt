@@ -19,15 +19,16 @@ import org.cufy.mmrpc.editor.components.scaffold.ClientScaffold
 import kotlin.math.roundToInt
 
 @Composable
-fun NamespacePage(
-    route: NamespacePage,
-    clientLocal: ClientLocal,
-    modifier: Modifier = Modifier,
-) {
-    val spec by clientLocal.specState.collectAsState()
+context(
+    local: Local,
+    navCtrl: MainNavController,
+    route: MainRoute.Namespace,
+)
+fun NamespacePage(modifier: Modifier = Modifier) {
+    val spec = local.repo.displaySpec
     val elements = remember(route) { spec.elementsInRoots[route.namespace] ?: emptyList() }
     var focusOnElementReady by remember { mutableStateOf(false) }
-    var focusOnElementYPosition by remember { mutableStateOf(0f) }
+    var focusOnElementYPosition by remember { mutableFloatStateOf(0f) }
     val coroutineScope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
 
@@ -39,17 +40,14 @@ fun NamespacePage(
         }
     }
 
-    ClientScaffold(
-        modifier = modifier,
-        clientLocal = clientLocal
-    ) {
+    ClientScaffold(modifier) {
         Column(
             modifier = Modifier
                 .width(COMMON_CONTENT_WIDTH)
                 .verticalScroll(scrollState),
             verticalArrangement = Arrangement.spacedBy(COMMON_PADDING),
         ) {
-            for (element in elements) {
+            for (element in elements.filter { !it.canonicalName.isAnonymous }) {
                 OutlinedCard(
                     modifier = when (element == route.focusOn) {
                         false -> Modifier
@@ -65,18 +63,24 @@ fun NamespacePage(
                             element = element,
                             onElementClick = {
                                 if (it != element || it is ProtocolDefinition) {
-                                    clientLocal.goToDefinition(it)
+                                    goToDefinition(it)
                                 }
                             },
                         )
 
                         Spacer(Modifier.height(COMMON_PADDING))
 
-                        ElementDescription(element, clientLocal::goToDefinition)
+                        ElementDescription(
+                            element = element,
+                            onElementClick = { goToDefinition(it) },
+                        )
 
                         Spacer(Modifier.height(COMMON_PADDING))
 
-                        ElementAttributes(element, clientLocal::goToDefinition)
+                        ElementAttributes(
+                            element = element,
+                            onElementClick = { goToDefinition(it) },
+                        )
                     }
                 }
             }

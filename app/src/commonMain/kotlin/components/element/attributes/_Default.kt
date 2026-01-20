@@ -1,5 +1,6 @@
 package org.cufy.mmrpc.editor.components.element.attributes
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import org.cufy.mmrpc.ElementDefinition
@@ -10,4 +11,5 @@ fun DefaultElementAttributes(
     onElementClick: (ElementDefinition) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    Box(modifier)
 }

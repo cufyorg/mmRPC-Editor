@@ -6,14 +6,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import org.cufy.mmrpc.ElementDefinition
-import org.cufy.mmrpc.StructDefinition
+import org.cufy.mmrpc.TraitDefinition
 import org.cufy.mmrpc.editor.COMMON_PADDING
 import org.cufy.mmrpc.editor.components.element.reference.FieldElementReference
 import org.cufy.mmrpc.editor.util.fieldsInherited
 
 @Composable
-fun StructElementAttributes(
-    element: StructDefinition,
+fun TraitElementAttributes(
+    element: TraitDefinition,
     onElementClick: (ElementDefinition) -> Unit,
     modifier: Modifier = Modifier,
     highlighted: Set<String> = emptySet(),

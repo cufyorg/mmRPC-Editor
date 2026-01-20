@@ -16,15 +16,13 @@ import org.cufy.mmrpc.editor.components.element.description.ElementDescription
 import org.cufy.mmrpc.editor.components.scaffold.ClientScaffold
 
 @Composable
-fun ProtocolPage(
-    route: ProtocolPage,
-    clientLocal: ClientLocal,
-    modifier: Modifier = Modifier,
-) {
-    ClientScaffold(
-        modifier = modifier,
-        clientLocal = clientLocal
-    ) {
+context(
+    local: Local,
+    navCtrl: MainNavController,
+    route: MainRoute.Protocol,
+)
+fun ProtocolPage(modifier: Modifier = Modifier) {
+    ClientScaffold(modifier) {
         Column(
             modifier = Modifier
                 .width(COMMON_CONTENT_WIDTH)
@@ -47,7 +45,10 @@ fun ProtocolPage(
                 )
             }
 
-            ElementDescription(route.element, clientLocal::goToDefinition)
+            ElementDescription(
+                element = route.element,
+                onElementClick = { goToDefinition(it) },
+            )
 
             Spacer(Modifier.height(COMMON_PADDING))
 
@@ -59,7 +60,7 @@ fun ProtocolPage(
                     expanded = expanded,
                     onExpandCollapseButtonClick = { expanded = !expanded },
                     modifier = Modifier.fillMaxWidth(),
-                    onElementClick = clientLocal::goToDefinition,
+                    onElementClick = { goToDefinition(it) },
                 )
             }
 

@@ -2,26 +2,27 @@ package org.cufy.mmrpc.editor.common
 
 import org.cufy.mmrpc.ElementDefinition
 import org.cufy.mmrpc.ProtocolDefinition
-import org.cufy.mmrpc.editor.ClientLocal
-import org.cufy.mmrpc.editor.NamespacePage
-import org.cufy.mmrpc.editor.ProtocolPage
+import org.cufy.mmrpc.editor.Local
+import org.cufy.mmrpc.editor.MainNavController
+import org.cufy.mmrpc.editor.MainRoute
 
-fun ClientLocal.goToDefinition(element: ElementDefinition) {
-    val spec = specState.value
+context(local: Local, navCtrl: MainNavController)
+fun goToDefinition(element: ElementDefinition) {
+    val spec = local.repo.displaySpec
 
     when (element) {
         is ProtocolDefinition -> {
             val namespace = spec.elementsNearestRoot[element]
 
             namespace ?: return
-            navController.push(ProtocolPage(namespace, element))
+            navCtrl.push(MainRoute.Protocol(namespace, element))
         }
 
         else -> {
             val namespace = spec.elementsNearestRoot[element]
 
             namespace ?: return
-            navController.push(NamespacePage(namespace, element))
+            navCtrl.push(MainRoute.Namespace(namespace, element))
         }
     }
 }

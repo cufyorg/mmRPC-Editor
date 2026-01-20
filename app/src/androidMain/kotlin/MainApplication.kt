@@ -1,26 +1,26 @@
 package org.cufy.mmrpc.editor
 
 import android.app.Application
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import net.lsafer.compose.simplenav.InMemoryNavController
 
 class MainApplication : Application() {
     companion object {
-        val globalClientLocal = MutableStateFlow<ClientLocal?>(null)
+        lateinit var globalLocal: Local
+        lateinit var globalNavCtrl: MainNavController
     }
 
     override fun onCreate() {
         super.onCreate()
 
-        CoroutineScope(Dispatchers.IO).launch {
-            val application = this@MainApplication
-            val clientLocal = createAndroidClientLocal(
-                application = application,
+        runBlocking {
+            val local = createAndroidLocal()
+            val navCtrl = InMemoryNavController<MainRoute>(
+                default = MainRoute.Home,
             )
 
-            globalClientLocal.emit(clientLocal)
+            globalLocal = local
+            globalNavCtrl = navCtrl
         }
     }
 }

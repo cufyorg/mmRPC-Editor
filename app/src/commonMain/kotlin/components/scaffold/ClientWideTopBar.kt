@@ -11,23 +11,23 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import org.cufy.mmrpc.editor.ClientLocal
+import org.cufy.mmrpc.editor.Local
 import org.cufy.mmrpc.editor.common.openMmrpcSpec
 import org.cufy.mmrpc.editor.components.scaffold.dropdown.ExportDropdownMenu
 import org.cufy.mmrpc.editor.components.scaffold.dropdown.ThemeDropdownMenu
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+context(local: Local)
 fun ClientWideTopBar(
     modifier: Modifier = Modifier,
-    clientLocal: ClientLocal,
     scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     val coroutineScope = rememberCoroutineScope()
     var isThemeMenuOpen by remember { mutableStateOf(false) }
     var isExportMenuOpen by remember { mutableStateOf(false) }
 
-    fun onOpenSchemaClick() = coroutineScope.launch { openMmrpcSpec(clientLocal) }
+    fun onOpenSchemaClick() = coroutineScope.launch { openMmrpcSpec() }
 
     CenterAlignedTopAppBar(
         modifier = modifier,
@@ -40,7 +40,6 @@ fun ClientWideTopBar(
                 ThemeDropdownMenu(
                     expanded = isThemeMenuOpen,
                     onDismissRequest = { isThemeMenuOpen = false },
-                    clientLocal = clientLocal,
                 )
             }
             IconButton({ isExportMenuOpen = true }) {
@@ -49,7 +48,6 @@ fun ClientWideTopBar(
                 ExportDropdownMenu(
                     expanded = isExportMenuOpen,
                     onDismissRequest = { isExportMenuOpen = false },
-                    clientLocal = clientLocal,
                 )
             }
 

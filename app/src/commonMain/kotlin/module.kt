@@ -13,19 +13,6 @@ internal val moduleLogger = Logger.withTag("org.cufy.mmrpc.editor")
 
 /* ============= ------------------ ============= */
 
-const val PK_UI_SCALE = "ui.scale"
-const val PK_UI_COLORS = "ui.colors"
-
-const val PK_DATA_SPEC = "data.spec"
-
-const val UI_SCALE_DEFAULT = 100
-const val UI_SCALE_MAX = 200
-const val UI_SCALE_MIN = 50
-const val UI_SCALE_OFFSET = 80f
-const val UI_SCALE_FACTOR = .01f
-const val UI_SCALE_FONT_FACTOR = .6f
-
-const val UI_COLORS_DEFAULT = "light"
 const val UI_COLORS_DARK = "dark"
 const val UI_COLORS_LIGHT = "light"
 
@@ -47,5 +34,6 @@ val ELEMENT_COLOR_PROP_HIGHLIGHTED = Color(0xFF3445DB)
 val ELEMENT_COLOR_ATTR = Color(0xFF7F8C8D)
 
 val ELEMENT_COLOR_FAULT_NAME = Color(0xFFD35400)
+val ELEMENT_COLOR_FIELD_MODIFIERS = Color(0xFFD35400)
 
 /* ============= ------------------ ============= */

@@ -9,7 +9,6 @@ import com.mikepenz.markdown.compose.Markdown
 import com.mikepenz.markdown.m3.markdownColor
 import com.mikepenz.markdown.m3.markdownTypography
 import org.cufy.mmrpc.ElementDefinition
-import org.cufy.mmrpc.editor.ELEMENT_COLOR_DEF
 import org.cufy.mmrpc.editor.ELEMENT_COLOR_DESC
 import org.intellij.markdown.flavours.space.SFMFlavourDescriptor
 
@@ -24,7 +23,7 @@ fun ElementDescription(
     placeholder: String = "",
     modifier: Modifier = Modifier,
 ) {
-    SelectionContainer {
+    SelectionContainer(modifier) {
         Markdown(
             content = buildString {
                 // fixme this rendering function is garbage
@@ -80,13 +79,13 @@ fun ElementDescription(
             },
             colors = markdownColor(
                 text = ELEMENT_COLOR_DESC,
-                codeText = ELEMENT_COLOR_DEF,
-                inlineCodeText = ELEMENT_COLOR_DEF,
-                linkText = ELEMENT_COLOR_DEF,
+                // codeText = ELEMENT_COLOR_DEF,
+                // inlineCodeText = ELEMENT_COLOR_DEF,
+                // linkText = ELEMENT_COLOR_DEF,
             ),
             typography = markdownTypography(),
             flavour = SFMFlavourDescriptor(),
-            modifier = Modifier.widthIn(max = 1500.dp).then(modifier),
+            modifier = Modifier.widthIn(max = 1500.dp),
         )
     }
 }

@@ -19,16 +19,13 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.*
 import kotlinx.coroutines.launch
-import org.cufy.mmrpc.editor.ClientLocal
-import org.cufy.mmrpc.editor.common.preferences.updateUiScale
+import org.cufy.mmrpc.editor.Local
+import org.cufy.mmrpc.editor.MainNavController
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun DesktopClientWindowCompat(
-    application: ApplicationScope,
-    clientLocal: ClientLocal,
-    content: @Composable FrameWindowScope.() -> Unit,
-) {
+context(local: Local, app: ApplicationScope, navCtrl: MainNavController)
+fun DesktopUniWindowCompat(content: @Composable FrameWindowScope.() -> Unit) {
     val coroutineScope = rememberCoroutineScope()
     val windowState = rememberWindowState(
         size = DpSize(3840.dp, 2160.dp),
@@ -40,7 +37,7 @@ fun DesktopClientWindowCompat(
     val isCtrlPressed by derivedStateOf { isCtrlLeftPressed || isCtrlRightPressed }
 
     fun onLeaveRequest() = coroutineScope.launch {
-        val result = clientLocal.snackbar.showSnackbar(
+        val result = local.snackbar.showSnackbar(
             message = "Exit the application?",
             actionLabel = "Yes",
             withDismissAction = true,
@@ -48,30 +45,30 @@ fun DesktopClientWindowCompat(
         )
 
         if (result == SnackbarResult.ActionPerformed)
-            application.exitApplication()
+            app.exitApplication()
     }
 
     fun onScrollPointerEvent(it: PointerEvent) {
         if (isCtrlPressed) for (change in it.changes) when {
             change.scrollDelta.y > .0f ->
-                clientLocal.updateUiScale { it - 10 }
+                local.repo.uiScale -= 10
 
             change.scrollDelta.y < .0f ->
-                clientLocal.updateUiScale { it + 10 }
+                local.repo.uiScale += 10
         }
     }
 
     fun onPressPointerEvent(it: PointerEvent) {
         if (it.button?.index == 5)
-            if (!clientLocal.navController.back())
+            if (!navCtrl.back())
                 onLeaveRequest()
 
         if (it.button?.index == 6)
-            clientLocal.navController.forward()
+            navCtrl.forward()
     }
 
     Window(
-        onCloseRequest = application::exitApplication,
+        onCloseRequest = app::exitApplication,
         title = "Mmrpc Editor",
         state = windowState,
         onKeyEvent = {

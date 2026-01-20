@@ -1,16 +1,32 @@
-package org.cufy.mmrpc.editor
+package org.cufy.mmrpc.editor.support
 
 import kotlinx.serialization.Serializable
-import org.cufy.mmrpc.CanonicalName
-import org.cufy.mmrpc.ElementDefinition
+import org.cufy.mmrpc.*
+import org.cufy.mmrpc.compact.inflate
 
 @Serializable
-class ClientMmrpcSpec(
+class DisplayMmrpcSpec(
     val name: String = "[null]",
     val version: String = "[null]",
     val sections: List<CanonicalName> = emptyList(),
     val elements: List<ElementDefinition> = emptyList(),
 ) {
+    companion object {
+        fun of(spec: MmrpcSpec?): DisplayMmrpcSpec {
+            if (spec == null) return DisplayMmrpcSpec()
+            return DisplayMmrpcSpec(
+                name = spec.name,
+                version = spec.version,
+                sections = spec.sections,
+                elements = spec.elements.asSequence()
+                    .inflate(builtin.elements)
+                    .flatMap { it.collect() }
+                    .distinctBy { it.canonicalName }
+                    .toList()
+            )
+        }
+    }
+
     val isEmpty by lazy {
         name == "[null]" && version == "[null]" &&
                 sections.isEmpty() && elements.isEmpty()

@@ -4,23 +4,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
-import org.cufy.mmrpc.editor.ClientLocal
+import org.cufy.mmrpc.editor.Local
+import org.cufy.mmrpc.editor.MainNavController
+import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+context(local: Local, navCtrl: MainNavController)
 fun ClientScaffold(
     modifier: Modifier = Modifier,
-    clientLocal: ClientLocal,
-
-    floatingActionButton: @Composable () -> Unit = {},
     content: @Composable BoxScope.() -> Unit,
 ) {
-    val spec by clientLocal.specState.collectAsState()
+    val spec = local.repo.displaySpec
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
 
     PermanentNavigationDrawer(
@@ -28,7 +26,7 @@ fun ClientScaffold(
             .background(MaterialTheme.colorScheme.background)
             .then(modifier),
         drawerContent = {
-            ClientNavigationDrawer(clientLocal)
+            ClientNavigationDrawer()
         },
         content = {
             Scaffold(
@@ -36,7 +34,6 @@ fun ClientScaffold(
                 topBar = {
                     ClientWideTopBar(
                         modifier = Modifier.fillMaxWidth(),
-                        clientLocal = clientLocal,
                         scrollBehavior = scrollBehavior,
                     )
                 },
@@ -44,10 +41,9 @@ fun ClientScaffold(
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.BottomEnd,
-                        content = { SnackbarHost(clientLocal.snackbar) }
+                        content = { SnackbarHost(local.snackbar) }
                     )
                 },
-                floatingActionButton = floatingActionButton,
                 floatingActionButtonPosition = FabPosition.End,
                 content = { paddingValues ->
                     Box(
@@ -67,12 +63,7 @@ fun ClientScaffold(
                                 Text(
                                     fontSize = 15.sp,
                                     color = MaterialTheme.colorScheme.tertiary,
-                                    text = "dataDir: ${clientLocal.dataDir.toFile().absolutePath}"
-                                )
-                                Text(
-                                    fontSize = 15.sp,
-                                    color = MaterialTheme.colorScheme.tertiary,
-                                    text = "cacheDir: ${clientLocal.cacheDir.toFile().absolutePath}"
+                                    text = "pwd: ${File(".").absolutePath}"
                                 )
                             }
                         },

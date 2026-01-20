@@ -3,39 +3,28 @@ package org.cufy.mmrpc.editor
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
-import io.github.vinceglb.filekit.core.FileKit
-import org.cufy.mmrpc.editor.common.preferences.flowUiColorsInOrDefault
-import org.cufy.mmrpc.editor.common.preferences.flowUiScaleInOrDefault
+import io.github.vinceglb.filekit.FileKit
+import io.github.vinceglb.filekit.dialogs.init
+import org.cufy.mmrpc.editor.MainApplication.Companion.globalLocal
+import org.cufy.mmrpc.editor.MainApplication.Companion.globalNavCtrl
 import org.cufy.mmrpc.editor.components.window.main.MainWindow
-import org.cufy.mmrpc.editor.components.wrapper.AndroidClientWindowCompat
-import org.cufy.mmrpc.editor.components.wrapper.ClientTheme
+import org.cufy.mmrpc.editor.components.wrapper.AndroidUniWindowCompat
+import org.cufy.mmrpc.editor.components.wrapper.UniTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FileKit.init(this)
 
+        val local = globalLocal
+        val navCtrl = globalNavCtrl
+
         setContent {
-            val coroutineScope = rememberCoroutineScope()
-            val activity = this@MainActivity
-            val clientLocal = MainApplication
-                .globalClientLocal
-                .collectAsState()
-                .value ?: return@setContent
-
-            val uiColors by clientLocal
-                .flowUiColorsInOrDefault(coroutineScope)
-                .collectAsState()
-            val uiScale by clientLocal
-                .flowUiScaleInOrDefault(coroutineScope)
-                .collectAsState()
-
-            AndroidClientWindowCompat(clientLocal, activity) {
-                ClientTheme(uiScale, uiColors) {
-                    MainWindow(clientLocal)
+            context(local, navCtrl) {
+                AndroidUniWindowCompat {
+                    UniTheme {
+                        MainWindow()
+                    }
                 }
             }
         }

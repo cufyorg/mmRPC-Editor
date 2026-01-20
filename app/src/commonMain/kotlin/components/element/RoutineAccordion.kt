@@ -26,10 +26,10 @@ import org.cufy.mmrpc.editor.components.element.description.ElementDescription
 import org.cufy.mmrpc.editor.components.lib.CustomAccordion
 import org.cufy.mmrpc.editor.components.lib.DashedHorizontalDivider
 import org.cufy.mmrpc.editor.components.lib.PopupTooltipBox
-import org.cufy.mmrpc.editor.util.COMM_CHANNEL
-import org.cufy.mmrpc.editor.util.COMM_DIRECTION
-import org.cufy.mmrpc.editor.util.COMM_SECURITY
-import org.cufy.mmrpc.editor.util.COMM_STANDARD
+import org.cufy.mmrpc.experimental.isGrpcSupported
+import org.cufy.mmrpc.experimental.isHttpSupported
+import org.cufy.mmrpc.experimental.isKafkaSupported
+import org.cufy.mmrpc.experimental.isKrpcSupported
 
 @Composable
 fun RoutineAccordion(
@@ -39,10 +39,12 @@ fun RoutineAccordion(
     onElementClick: (ElementDefinition) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
-    val commChannel = routine.comm intersect COMM_CHANNEL
-    val commDirection = routine.comm intersect COMM_DIRECTION
-    val commSecurity = routine.comm intersect COMM_SECURITY
-    val commOther = routine.comm - COMM_STANDARD
+    val integList = buildList {
+        if (routine.comm.isGrpcSupported()) add("gRPC")
+        if (routine.comm.isKrpcSupported()) add("kRPC")
+        if (routine.comm.isHttpSupported()) add("Http")
+        if (routine.comm.isKafkaSupported()) add("Kafka")
+    }
 
     CustomAccordion(
         modifier = modifier,
@@ -70,14 +72,10 @@ fun RoutineAccordion(
 
             Spacer(Modifier.fillMaxWidth().weight(1f))
 
-            for (comm in commChannel + commDirection) {
-                Spacer(Modifier.width(COMMON_PADDING))
-
-                AssistChip(
-                    onClick = {},
-                    label = { Text(comm.value) },
-                )
-            }
+            AssistChip(
+                onClick = {},
+                label = { Text(routine.comm.name) },
+            )
 
             Spacer(Modifier.width(COMMON_PADDING))
 
@@ -108,21 +106,9 @@ fun RoutineAccordion(
                 fontWeight = FontWeight.Bold,
             )
 
-            if (commChannel.isNotEmpty()) BasicAttribute(
+            BasicAttribute(
                 attributeName = "Channel",
-                attributeValue = commChannel.joinToString(" | ") { it.value },
-            )
-            if (commDirection.isNotEmpty()) BasicAttribute(
-                attributeName = "Direction",
-                attributeValue = commDirection.joinToString(" | ") { it.value },
-            )
-            if (commSecurity.isNotEmpty()) BasicAttribute(
-                attributeName = "Security",
-                attributeValue = commSecurity.joinToString(" & ") { it.value },
-            )
-            if (commOther.isNotEmpty()) BasicAttribute(
-                attributeName = "Other",
-                attributeValue = commOther.joinToString(", ") { it.value },
+                attributeValue = integList.joinToString(" | "),
             )
 
             // Fault Section

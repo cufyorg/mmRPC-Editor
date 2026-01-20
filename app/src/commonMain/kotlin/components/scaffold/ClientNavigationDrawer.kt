@@ -10,25 +10,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PermanentDrawerSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import net.lsafer.sundry.compose.simplenav.current
-import org.cufy.mmrpc.editor.ClientLocal
-import org.cufy.mmrpc.editor.NamespacePage
+import org.cufy.mmrpc.editor.Local
+import org.cufy.mmrpc.editor.MainNavController
+import org.cufy.mmrpc.editor.MainRoute
 import org.cufy.mmrpc.editor.OVERSCROLL_HEIGHT
-import org.cufy.mmrpc.editor.ProtocolPage
 import org.cufy.mmrpc.editor.components.lib.CompactNavigationDrawerItem
 
 @Composable
-fun ClientNavigationDrawer(
-    clientLocal: ClientLocal,
-    modifier: Modifier = Modifier,
-) {
-    val spec by clientLocal.specState.collectAsState()
+context(local: Local, navCtrl: MainNavController)
+fun ClientNavigationDrawer(modifier: Modifier = Modifier) {
+    val spec = local.repo.displaySpec
 
     PermanentDrawerSheet(
         modifier = Modifier
@@ -72,14 +67,14 @@ fun ClientNavigationDrawer(
                         nsSubSection?.value.orEmpty()
                             .removePrefix(nsSection.value)
                             .ifBlank { "[toplevel]" },
-                    selected = when (val currentScreen = clientLocal.navController.current) {
-                        is NamespacePage -> currentScreen.namespace == nsSubSection
-                        is ProtocolPage -> currentScreen.namespace == nsSubSection
+                    selected = when (val currentScreen = navCtrl.current) {
+                        is MainRoute.Namespace -> currentScreen.namespace == nsSubSection
+                        is MainRoute.Protocol -> currentScreen.namespace == nsSubSection
 
                         else -> false
                     },
                     onClick = {
-                        clientLocal.navController.push(NamespacePage(nsSubSection))
+                        navCtrl.push(MainRoute.Namespace(nsSubSection))
                     },
                 )
             }

@@ -3,6 +3,7 @@ package org.cufy.mmrpc.editor.components.page.empty
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -14,17 +15,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
-import org.cufy.mmrpc.editor.ClientLocal
+import org.cufy.mmrpc.editor.Local
 import org.cufy.mmrpc.editor.common.openMmrpcSpec
 
 @Composable
-fun EmptyPage(
-    clientLocal: ClientLocal,
-    modifier: Modifier = Modifier,
-) {
+context(local: Local)
+fun EmptyPage(modifier: Modifier = Modifier) {
     val coroutineScope = rememberCoroutineScope()
 
-    fun onOpenSchemaClick() = coroutineScope.launch { openMmrpcSpec(clientLocal) }
+    fun onOpenSchemaClick() = coroutineScope.launch { openMmrpcSpec() }
 
     Scaffold(
         modifier = Modifier.fillMaxWidth().then(modifier),
@@ -32,11 +31,11 @@ fun EmptyPage(
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.BottomEnd,
-                content = { SnackbarHost(clientLocal.snackbar) }
+                content = { SnackbarHost(local.snackbar) }
             )
         },
-    ) {
-        Box(Modifier.fillMaxSize(), Alignment.Center) {
+    ) { contentPadding ->
+        Box(Modifier.fillMaxSize().padding(contentPadding), Alignment.Center) {
             Button(::onOpenSchemaClick) {
                 Text(
                     text = "Open Schema",

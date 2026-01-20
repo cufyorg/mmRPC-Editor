@@ -13,20 +13,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import kotlinx.coroutines.launch
-import org.cufy.mmrpc.editor.ClientLocal
+import org.cufy.mmrpc.editor.Local
+import org.cufy.mmrpc.editor.MainNavController
 
 @Composable
-fun AndroidClientWindowCompat(
-    clientLocal: ClientLocal,
-    activity: ComponentActivity,
-    content: @Composable () -> Unit,
-) {
+context(local: Local, app: ComponentActivity, navCtrl: MainNavController)
+fun AndroidUniWindowCompat(content: @Composable () -> Unit) {
     val focusManager = LocalFocusManager.current
-
     val coroutineScope = rememberCoroutineScope()
 
     fun onLeaveRequest() = coroutineScope.launch {
-        val result = clientLocal.snackbar.showSnackbar(
+        val result = local.snackbar.showSnackbar(
             message = "Exit the application?",
             actionLabel = "Yes",
             withDismissAction = true,
@@ -34,11 +31,11 @@ fun AndroidClientWindowCompat(
         )
 
         if (result == SnackbarResult.ActionPerformed)
-            activity.finish()
+            app.finish()
     }
 
     BackHandler {
-        if (!clientLocal.navController.back())
+        if (!navCtrl.back())
             onLeaveRequest()
     }
 

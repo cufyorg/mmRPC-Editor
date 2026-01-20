@@ -4,20 +4,23 @@ import co.touchlab.kermit.Message
 import co.touchlab.kermit.MessageStringFormatter
 import co.touchlab.kermit.Severity
 import co.touchlab.kermit.Tag
-import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
 
-class SimpleLogFormatter(private val clock: Clock) : MessageStringFormatter {
+class SimpleLogFormatter(
+    private val timeZone: TimeZone,
+    private val clock: Clock,
+) : MessageStringFormatter {
     override fun formatMessage(severity: Severity?, tag: Tag?, message: Message) = buildString {
-        val datetime = clock.now()
-            .toLocalDateTime(TimeZone.currentSystemDefault())
+        val datetime = clock.now().toLocalDateTime(timeZone)
 
         append(datetime.year)
         append('-')
-        append(datetime.monthNumber)
+        append(datetime.month.number)
         append('-')
-        append(datetime.dayOfMonth)
+        append(datetime.day)
         append(' ')
         append(datetime.hour)
         append(':')
