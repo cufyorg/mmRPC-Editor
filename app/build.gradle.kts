@@ -43,7 +43,6 @@ kotlin {
         implementation(compose.runtime)
         implementation(compose.foundation)
         implementation(compose.material3)
-        implementation(compose.material3AdaptiveNavigationSuite)
         implementation(compose.materialIconsExtended)
         implementation(compose.ui)
         implementation(compose.components.resources)
@@ -72,10 +71,6 @@ kotlin {
         implementation(libs.androidx.lifecycle.runtime.compose)
         implementation(libs.androidx.lifecycle.viewmodel)
         implementation(libs.androidx.lifecycle.viewmodel.compose)
-
-        implementation(libs.material3.adaptive)
-        implementation(libs.material3.adaptive.layout)
-        implementation(libs.material3.adaptive.navigation)
     }
     sourceSets.named("desktopMain").dependencies {
         implementation(libs.kotlinx.coroutines.swing)
