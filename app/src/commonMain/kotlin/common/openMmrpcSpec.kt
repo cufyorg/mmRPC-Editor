@@ -14,9 +14,7 @@ import java.io.IOException
 
 context(local: Local)
 suspend fun openMmrpcSpec() {
-    val file = FileKit.openFilePicker(
-        title = "Select mmrpc schema",
-    )
+    val file = FileKit.openFilePicker()
 
     file ?: return
 
