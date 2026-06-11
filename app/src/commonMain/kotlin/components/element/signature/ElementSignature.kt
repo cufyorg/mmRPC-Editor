@@ -23,9 +23,9 @@ fun ElementSignature(
         is UnionDefinition -> UnionElementSignature(element, onElementClick, modifier)
         is StructDefinition -> StructElementSignature(element, onElementClick, modifier)
         is TraitDefinition -> TraitElementSignature(element, onElementClick, modifier)
+        is ScalarDefinition -> ScalarElementSignature(element, onElementClick, modifier)
 
         is FaultDefinition -> DefaultElementSignature("fault", element, onElementClick, modifier)
-        is ScalarDefinition -> DefaultElementSignature("scalar", element, onElementClick, modifier)
         is ProtocolDefinition -> DefaultElementSignature("protocol", element, onElementClick, modifier)
         is RoutineDefinition -> DefaultElementSignature("routine", element, onElementClick, modifier)
         is MetadataDefinition -> DefaultElementSignature("metadata", element, onElementClick, modifier)
