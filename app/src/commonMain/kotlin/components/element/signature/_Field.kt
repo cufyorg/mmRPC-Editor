@@ -13,10 +13,12 @@ import org.cufy.mmrpc.FieldDefinition
 import org.cufy.mmrpc.editor.ELEMENT_COLOR_DEF
 import org.cufy.mmrpc.editor.ELEMENT_COLOR_VALUE
 import org.cufy.mmrpc.editor.ELEMENT_STYLE_MEDIUM
+import org.cufy.mmrpc.editor.Local
 import org.cufy.mmrpc.editor.components.element.reference.ElementReference
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
+context(local: Local)
 fun FieldElementSignature(
     element: FieldDefinition,
     onElementClick: (ElementDefinition) -> Unit = {},

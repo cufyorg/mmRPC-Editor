@@ -8,10 +8,12 @@ import androidx.compose.ui.Modifier
 import org.cufy.mmrpc.ElementDefinition
 import org.cufy.mmrpc.StructDefinition
 import org.cufy.mmrpc.editor.COMMON_PADDING
+import org.cufy.mmrpc.editor.Local
 import org.cufy.mmrpc.editor.components.element.reference.FieldElementReference
 import org.cufy.mmrpc.editor.util.fieldsInherited
 
 @Composable
+context(local: Local)
 fun StructElementAttributes(
     element: StructDefinition,
     onElementClick: (ElementDefinition) -> Unit,

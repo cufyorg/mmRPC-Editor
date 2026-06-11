@@ -6,8 +6,10 @@ import org.cufy.mmrpc.ElementDefinition
 import org.cufy.mmrpc.MetadataDefinition
 import org.cufy.mmrpc.StructDefinition
 import org.cufy.mmrpc.TraitDefinition
+import org.cufy.mmrpc.editor.Local
 
 @Composable
+context(local: Local)
 fun ElementAttributes(
     element: ElementDefinition,
     onElementClick: (ElementDefinition) -> Unit,

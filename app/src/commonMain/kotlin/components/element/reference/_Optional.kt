@@ -9,8 +9,10 @@ import org.cufy.mmrpc.ElementDefinition
 import org.cufy.mmrpc.OptionalDefinition
 import org.cufy.mmrpc.editor.ELEMENT_COLOR_DEF
 import org.cufy.mmrpc.editor.ELEMENT_STYLE_MEDIUM
+import org.cufy.mmrpc.editor.Local
 
 @Composable
+context(local: Local)
 fun OptionalElementReference(
     element: OptionalDefinition,
     onElementClick: (ElementDefinition) -> Unit,

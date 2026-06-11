@@ -14,9 +14,11 @@ import org.cufy.mmrpc.TupleDefinition
 import org.cufy.mmrpc.editor.COMMON_PADDING
 import org.cufy.mmrpc.editor.ELEMENT_COLOR_DEF
 import org.cufy.mmrpc.editor.ELEMENT_STYLE_MEDIUM
+import org.cufy.mmrpc.editor.Local
 import org.cufy.mmrpc.editor.components.element.reference.ElementReference
 
 @Composable
+context(local: Local)
 fun TupleElementSignature(
     element: TupleDefinition,
     onElementClick: (ElementDefinition) -> Unit,

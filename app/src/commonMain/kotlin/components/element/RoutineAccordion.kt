@@ -32,6 +32,7 @@ import org.cufy.mmrpc.experimental.isKafkaSupported
 import org.cufy.mmrpc.experimental.isKrpcSupported
 
 @Composable
+context(local: Local)
 fun RoutineAccordion(
     routine: RoutineDefinition,
     expanded: Boolean,

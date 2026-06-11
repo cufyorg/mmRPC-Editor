@@ -8,10 +8,12 @@ import androidx.compose.ui.text.font.FontFamily
 import org.cufy.mmrpc.ElementDefinition
 import org.cufy.mmrpc.editor.ELEMENT_COLOR_DEF
 import org.cufy.mmrpc.editor.ELEMENT_STYLE_MEDIUM
+import org.cufy.mmrpc.editor.Local
 import org.cufy.mmrpc.editor.components.element.content.ElementContent
 import org.cufy.mmrpc.editor.components.lib.PopupTooltipBox
 
 @Composable
+context(local: Local)
 fun DefaultElementReference(
     element: ElementDefinition,
     onElementClick: (ElementDefinition) -> Unit,

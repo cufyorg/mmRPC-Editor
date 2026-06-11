@@ -3,8 +3,10 @@ package org.cufy.mmrpc.editor.components.element.reference
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import org.cufy.mmrpc.*
+import org.cufy.mmrpc.editor.Local
 
 @Composable
+context(local: Local)
 fun ElementReference(
     element: ElementDefinition,
     onElementClick: (ElementDefinition) -> Unit,

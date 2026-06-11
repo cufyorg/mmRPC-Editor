@@ -14,6 +14,7 @@ import org.cufy.mmrpc.editor.components.element.content.ElementContent
 import org.cufy.mmrpc.editor.components.lib.PopupTooltipBox
 
 @Composable
+context(local: Local)
 fun FieldElementReference(
     element: FieldDefinition,
     onElementClick: (ElementDefinition) -> Unit,
