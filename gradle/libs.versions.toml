@@ -8,7 +8,7 @@ compose = "1.10.0"
 
 java = "18"
 
-mmrpc = "0.5.0-beta.4"
+mmrpc = "0.5.0-beta.17"
 extkt = "0.1.5"
 
 lsafer-compose-simplenav = "0.0.6-rc.2"

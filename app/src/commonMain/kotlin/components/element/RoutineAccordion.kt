@@ -26,10 +26,9 @@ import org.cufy.mmrpc.editor.components.element.description.ElementDescription
 import org.cufy.mmrpc.editor.components.lib.CustomAccordion
 import org.cufy.mmrpc.editor.components.lib.DashedHorizontalDivider
 import org.cufy.mmrpc.editor.components.lib.PopupTooltipBox
-import org.cufy.mmrpc.experimental.isGrpcSupported
-import org.cufy.mmrpc.experimental.isHttpSupported
-import org.cufy.mmrpc.experimental.isKafkaSupported
-import org.cufy.mmrpc.experimental.isKrpcSupported
+import org.cufy.mmrpc.experimental.isFdxSupported
+import org.cufy.mmrpc.experimental.isHdxSupported
+import org.cufy.mmrpc.experimental.isSxSupported
 
 @Composable
 context(local: Local)
@@ -41,10 +40,9 @@ fun RoutineAccordion(
     modifier: Modifier = Modifier,
 ) {
     val integList = buildList {
-        if (routine.comm.isGrpcSupported()) add("gRPC")
-        if (routine.comm.isKrpcSupported()) add("kRPC")
-        if (routine.comm.isHttpSupported()) add("Http")
-        if (routine.comm.isKafkaSupported()) add("Kafka")
+        if (routine.comm.isFdxSupported()) add("Fdx (gRPC)")
+        if (routine.comm.isHdxSupported()) add("Hdx (Http)")
+        if (routine.comm.isSxSupported()) add("Sx (Kafka)")
     }
 
     CustomAccordion(
